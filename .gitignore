@@ -39,4 +39,4 @@ out/
 ### Custom ###
 *.yml
 .DS_Store
-
+node_modules/
