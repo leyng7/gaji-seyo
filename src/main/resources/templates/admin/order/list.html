@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{admin/layout}"
+>
+
+<div class="row mb-2" layout:fragment="contentHeader">
+    <div class="col-sm-12">
+        <h1 class="m-0">주문내역</h1>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="searchForm" name="searchForm" th:action="@{/admin/orders}" method="GET">
+                    <input type="hidden" name="page" th:value="${page.number + 1}"/>
+                    <input type="hidden" name="size" th:value="${page.size}"/>
+                    <input type="hidden" name="enteredWaybill" th:value="${search.enteredWaybill}"/>
+                    <div class="form-inline">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" name="keyword" placeholder="주문자분 성함" th:value="${search.keyword}"/>
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                        <!--<button class="btn btn-sm btn-outline-dark ml-2">엑셀 내보내기</button>
+                        <button class="btn btn-sm btn-outline-dark ml-2">문자 보내기</button>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a th:href="@{/admin/orders}" class="nav-link" th:classappend="${search.enteredWaybill == null ? 'active' : null}">전체</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/orders?enteredWaybill=true}" class="nav-link" th:classappend="${search.enteredWaybill != null && search.enteredWaybill ? 'active' : null}">송장 입력</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/orders?enteredWaybill=false}" class="nav-link" th:classappend="${search.enteredWaybill != null && !search.enteredWaybill ? 'active' : null}">송장 미입력</a>
+                </li>
+            </ul>
+            <div class="card-body mb-3 border-bottom" th:each="content : ${page.content}">
+                <div class="row mb-3 d-flex justify-content-end">
+                    <button th:if="${!content.isCanceled}" class="btn btn-sm btn-danger" th:onclick="|orderCancel(${content.id});|">주문 취소</button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2 mb-md-0">
+                        <div class="mb-3">
+                            <h4>주문 상품</h4>
+                            <div class="row" th:each="orderItem : ${content.orderItems}">
+                                <div class="col-md-6" th:text="|${orderItem.itemName} ${#numbers.formatInteger(orderItem.orderPrice, 0, 'COMMA')}원|"></div>
+                                <div class="col-md-6" th:text="|${#numbers.formatInteger(orderItem.orderPrice * orderItem.count, 0, 'COMMA')}원 / ${orderItem.count}개|"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div th:text="${content.depositBank.displayValue}"></div>
+                            <div th:text="|
+                                상품 ${#numbers.formatInteger(content.totalPrice, 0, 'COMMA')}원
+                                택배비 ${#numbers.formatInteger(content.deliveryFee.fee, 0, 'COMMA')}원 |"
+                            ></div>
+                            <strong th:text="|총 ${#numbers.formatInteger(content.deliveryFee.fee + content.totalPrice, 0, 'COMMA')}원 (입금자 ${content.depositorName})|"></strong>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>주문 정보</h4>
+                        <div th:text="|주문일 : ${#temporals.format(content.createdDate, 'yyyy-MM-dd HH:mm')}|"></div>
+                        <div>
+                            <span th:text="|주문자분 : ${content.ordererName}|"></span>
+                            <small th:text="|(${content.ordererNumber})|"></small>
+                        </div>
+                        <div>
+                            <span th:text="|받는분 : ${content.receiverName}|"></span>
+                            <small th:text="|(${content.receiverNumber})|"></small>
+                        </div>
+                        <div th:text="|주소 : [${content.zipCode}] ${content.address} ${content.detailAddress}|"></div>
+                        <div class="mb-1" th:text="${content.etc}"></div>
+                        <div class="input-group input-group-sm" th:if="${!content.isCanceled}">
+                            <input class="form-control form-inline" type="text" th:id="|waybillNumber${content.id}|" th:value="${content.waybillNumber}" aria-describedby="waybillNumber-button">
+                            <button class="btn btn-sm btn-primary" type="button" id="waybillNumber-button" th:onclick="|changeWaybillNumber(${content.id});|">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right"
+                    th:with="totalPages=${page.totalPages == 0 ? 1 : page.totalPages},
+                             start=${T(Math).floor(page.number / 10) * 10 + 1},
+                             last=(${start + 9 < page.totalPages ? start + 9 : totalPages})"
+                >
+                    <li class="page-item" th:classappend="${page.first} ? 'disabled' : null"><a class="page-link" href="javascript:fn_page('1')">&laquo;</a></li>
+                    <li class="page-item" th:classappend="${page.first} ? 'disabled' : null"><a class="page-link" th:href="'javascript:fn_page(' + ${page.number} + ')'">&lsaquo;</a></li>
+                    <li class="page-item" th:each="pageNumber: ${#numbers.sequence(start, last)}" th:classappend="${pageNumber == page.number + 1} ? 'active'">
+                        <a class="page-link" th:href="'javascript:fn_page(' + ${pageNumber} + ')'" th:text="${pageNumber}">1</a></li>
+                    </li>
+                    <li class="page-item" th:classappend="${page.last} ? 'disabled' : null"><a class="page-link" th:href="'javascript:fn_page(' + ${page.number + 2} + ')'">&rsaquo;</a></li>
+                    <li class="page-item" th:classappend="${page.last} ? 'disabled' : null"><a class="page-link" th:href="'javascript:fn_page(' + ${totalPages} + ')'">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" layout:fragment="script">
+  $('input[name=keyword]').on('keyup', function (e) {
+    if (e.keyCode === 13) {
+      fn_search();
+    }
+  })
+
+  function changeWaybillNumber(id) {
+    const isConfirm = confirm("운송장 번호를 변경 하시겠습니까?")
+    if (isConfirm) {
+      $.ajax({
+        type: 'POST',
+        data: {waybillNumber: $('#waybillNumber' + id).val()},
+        url: '/admin/orders/changeWaybillNumber/' + id,
+      }).done(function (result) {
+        alert("적용하였습니다.");
+      }).fail(function (xhr, status, error) {
+        alert("실패하였습니다.");
+      });
+    }
+  }
+
+  function orderCancel(id) {
+    if (!id) {
+      alert('아이디 값이 없습니다.');
+      return false;
+    }
+    const isConfirm = confirm("주문을 취소 하시겠습니까?")
+    if (isConfirm) {
+      $.ajax({
+        type: 'POST',
+        url: '/admin/orders/' + id + '/cancel',
+      }).done(function (result) {
+        alert("취소하였습니다.");
+        location.reload();
+      }).fail(function (xhr, status, error) {
+        alert("실패하였습니다.");
+      });
+    }
+  }
+
+  function fn_page(pageNumber) {
+    $("input[name=page]").val(pageNumber);
+    $("#searchForm").submit();
+  }
+
+  function fn_search() {
+    $("input[name=page]").val(1);
+    $("#searchForm").submit();
+  }
+
+</script>
+
+</html>

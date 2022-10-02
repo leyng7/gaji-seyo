@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{user/layout}"
+>
+
+<div class="container py-5" layout:fragment="content">
+    <div class="row">
+        <div class="card col-md-6 offset-md-3">
+            <form id="insertForm" class="card-body" method="post" th:action="@{/orders/form}" th:object="${orderForm}">
+                <h2 class="text-center mb-5">영덕태흥 상품주문서</h2>
+                <div class="mb-3" style="color: red;">
+                    *는 필수항목입니다
+                </div>
+                <div class="mb-3">
+                    <label th:for="orderDetails" class="form-label" style="font-weight: bold;">원하시는 상품을 선택해 주세요*</label>
+                    <div class="d-flex">
+                        <select id="item-select" class="item-select form-select">
+                            <option value="">상품 선택</option>
+                            <option th:each="item : ${products}"
+                                    th:if="${item.stockQuantity > 0}"
+                                    th:value="${item.id}"
+                                    th:data-price="${item.price}"
+                                    th:inline="text"
+                            >[[${item.name}]] [[${#numbers.formatInteger(item.price, 0, 'COMMA')}]]원 <span th:if="${item.showStock}" th:remove="tag" th:text="|(${#numbers.formatInteger(item.stockQuantity, 0, 'COMMA')}개 남음)|"></span>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div id="item-container" class="mb-3 border-top">
+
+                </div>
+                <div class="mb-3">
+                    <label th:for="ordererName" class="form-label" style="font-weight: bold;">주문자분 성함*</label>
+                    <input type="text" class="form-control" th:field="*{ordererName}" required="required" title="주문자분 성함"/>
+                </div>
+                <div class="mb-3">
+                    <label th:for="ordererNumber" class="form-label" style="font-weight: bold;">주문자분 전화번호*</label>
+                    <input type="text" class="form-control" th:field="*{ordererNumber}" required="required" title="주문자분 전화번호"/>
+                </div>
+                <div class="mb-3">
+                    <label th:for="receiverName" class="form-label">받는분 성함 <small style="color: orange">[주문자분 이름과 다른경우 적어주세요]</small></label>
+                    <input type="text" class="form-control" th:field="*{receiverName}"/>
+                </div>
+                <div class="mb-3">
+                    <label th:for="receiverNumber" class="form-label">받는분 전화번호 <small style="color: orange">[주문자와 전화번호가 다른경우 적어주세요]</small></label>
+                    <input type="text" class="form-control" th:field="*{receiverNumber}"/>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" style="font-weight: bold;">배송지 주소*</label>
+                    <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+                        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="text" class="form-control" th:field="*{zipCode}" placeholder="우편번호" required="required" readonly="readonly" title="우편번호"/>
+                        <div class="input-group-append">
+                            <input type="button" class="btn btn-outline-primary" onclick="sample3_execDaumPostcode()" value="우편번호 찾기" readonly>
+                        </div>
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="text" class="form-control" th:field="*{address}" placeholder="주소" required="required" readonly="readonly" title="주소"/>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group col-md-8 mb-1">
+                            <input type="text" class="form-control" th:field="*{detailAddress}" placeholder="상세주소">
+                        </div>
+                        <div class="input-group col-md-4 mb-1" style="display: none;">
+                            <input type="text" class="form-control" id="sample3_extraAddress" placeholder="참고항목" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label th:for="depositorName" class="form-label" style="font-weight: bold;">입금자분 성함*</label>
+                    <input type="text" class="form-control" th:field="*{depositorName}" required="required" title="입금자분 성함"/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: bold;">택배비를 선택해주세요*</label>
+                    <div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{deliveryFee}" value="F4500" data-price="4500" required="required" title="택배비">
+                            <label class="form-check-label" th:for="deliveryFee1">4500원 <small style="color: orange;">[한꺼번에 다 담아 받아요 한박스로 안되는 상품도 있답니다.]</small></label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{deliveryFee}" value="F5500" data-price="5500">
+                            <label class="form-check-label" th:for="deliveryFee2">5500원 <small style="color: orange;">[여러마리나 여러박스를 두박스 따로 담아 묶음해서 받아요]</small></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: bold;">✔️ 입금하실 금액*</label>
+                    <div>
+                       💰 <span id="total-price" style="color: blue; font-size: 16px; font-weight: bold;">4,500</span>원 (택배비 포함)
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: bold;">입금할 은행을 선택해주세요*</label>
+                    <div>
+                        <div class="form-check" th:each="bank : ${T(me.ryeong.ckadldb.modules.order.domain.Bank).values()}">
+                            <input class="form-check-input" type="radio" th:field="*{depositBank}" th:value="${bank}" required="required" title="입금할 은행"/>
+                            <label class="form-check-label" th:for="|depositBank${bankStat.count}|" th:text="${bank.displayValue}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label th:for="etc" class="form-label">기타..하고 싶은말을 적어주세요</small></label>
+                    <textarea class="form-control" th:field="*{etc}"></textarea>
+                </div>
+                <!--<div class="mb-3">
+                    <b>♡후기이벤트 반짝세일 여러 이벤트가있는 태흥 카페로 초대합니다</b><br/>
+                    <span style="color: red;">영덕대게태흥 네이버카페⬇️</span>
+                    <br/>
+                    <a target="_blank" href="http://cafe.naver.com/a2994">http://cafe.naver.com/a2994</a>
+                    <br/><br/>
+                    <span style="color: red;">소식받기 카톡=》채널추가하시고 영덕대게태흥 반짝세일,조업,판매,이벤트등 각종 소식을 톡으로 받아보세요⬇️</span>
+                    <br/>
+                    <a target="_blank" href="http://pf.kakao.com/_DxkAxoxd">http://pf.kakao.com/_DxkAxoxd</a>
+                </div>-->
+                <div class="d-grid gap-2">
+                    <strong style="color: green;">☆송장조회는 아침 6시이후 주문내역에서 송장번호 클릭 해주세요 </strong>
+                    <button type="submit" class="btn btn-primary">주문하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script id="item-template" type="text/x-handlebars-template">
+        <div class="input-group input-group-sm mb-1 order-item">
+            <input type="hidden" value="{{orderItemId}}"/>
+            <span class="input-group-text w-75">{{itemName}}</span>
+            <input data-price="{{price}}" type="text" class="form-control item-detail" value="{{count}}" readonly/>
+            <button class="btn btn-outline-primary del-item-btn" type="button">삭제</button>
+        </div>
+    </script>
+    <script id="item-template2" type="text/x-handlebars-template">
+        <div class="border-bottom py-2 order-item">
+            <input type="hidden" value="{{orderItemId}}"/>
+            <div class="mb-2">{{itemName}}</div>
+            <div class="d-flex justify-content-between">
+                <div style="width: 100px;">
+                    <div class="input-group input-group-sm">
+                        <button type="button" class="btn btn-outline-primary btn-sm minus-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                            </svg>
+                        </button>
+                        <input data-price="{{price}}" type="text" class="form-control form-control-sm text-center item-detail" value="1"/>
+                        <button type="button" class="btn btn-outline-primary btn-sm plus-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <span>{{price}}</span>원
+                    <button class="btn btn-outline-primary btn-sm del-item-btn" type="button">삭제</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+
+<script layout:fragment="script">
+
+  function calculateTotal() {
+    let sum = 0;
+    $('.item-detail').each(function (index, item) {
+      let price = $(item).data('price');
+      price = isNaN(price) ? 0 : price;
+
+      let count = $(item).val();
+      count = isNaN(count) ? 0 : count;
+
+      $(item).parent().parent().next().find('span').text((price * count).toLocaleString());
+      sum += price * count;
+    })
+    sum += $("input[name=deliveryFee]:checked").data('price');
+    $('#total-price').text(sum.toLocaleString());
+  }
+
+  function getItemList() {
+    let itemList = [];
+
+    $('.order-item').each(function (index, item) {
+      itemList.push({
+        "id": $(item).children('input[type="hidden"]').val(),
+        "count": $(item).find('input.item-detail[type="text"]').val()
+      })
+    })
+
+    return itemList;
+  }
+
+  $(function () {
+
+    const source = document.getElementById("item-template2").innerHTML;
+    const template = Handlebars.compile(source);
+
+    $("#ordererNumber").inputmask("999-9999-9999");
+    $("#receiverNumber").inputmask("999-9999-9999");
+
+    $('.item-count, input[name=deliveryFee]').on('change', function () {
+      calculateTotal();
+    })
+
+    $('#item-select').on('change', function () {
+      const itemSelect = $('#item-select').children('option:selected');
+
+      if (!itemSelect.val()) {
+        return false;
+      }
+
+      const findItem = getItemList().find(function (item) {
+        return item.id === itemSelect.val();
+      });
+
+      if (findItem) {
+        alert('이미 선택한 상품입니다.');
+        $('#item-select').val('').change();
+        return false;
+      }
+
+      const data = {
+        "orderItemId": itemSelect.val(),
+        "itemName": itemSelect.text(),
+        "price": itemSelect.data("price")
+      }
+      const html = template(data);
+      $('#item-container').append(html);
+
+      calculateTotal();
+
+      $('#item-select').val('').change();
+    })
+
+    $('#item-container').on('click', '.del-item-btn', function () {
+      $(this).parent().parent().parent().remove();
+      calculateTotal();
+    })
+
+    $('#item-container').on('click', '.minus-btn', function (e) {
+      e.preventDefault();
+      const $input = $(this).next();
+      if (parseInt($input.val()) === 1) {
+        alert('1 보다 작을 수 없습니다.');
+        return false;
+      }
+      $input.val($input.val() - 1);
+      calculateTotal();
+    })
+
+    $('#item-container').on('click', '.plus-btn', function (e) {
+      e.preventDefault();
+      const $input = $(this).prev();
+      $input.val(parseInt($input.val()) + 1);
+      calculateTotal();
+    })
+
+    $("#insertForm").validate({
+      onkeyup: false,
+      onclick: false,
+      onfocusout: false,
+      focusInvalid: false,
+      showErrors: function (errorMap, errorList) {
+        if (this.numberOfInvalids()) { // 에러가 있으면
+          alert(errorList[0].message + ' 은/는 필수 항목입니다.'); // 경고창으로 띄움
+          errorList[0].element.focus();
+          return false;
+        }
+      },
+      submitHandler: function (form) {
+
+        const itemList = getItemList();
+
+        if (itemList.length === 0) {
+          alert("상품을 추가해주세요.");
+          $('#item-select').focus();
+          return false;
+        }
+
+        let serializeObject = $(form).serializeObject();
+        serializeObject.orderItems = itemList;
+
+        const isConfirm = confirm("주문하시겠습니까?");
+        if (isConfirm) {
+          $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(serializeObject),
+            url: '/orders/form',
+          }).done(function (result) {
+            alert("정상적으로 주문하였습니다.");
+            location.replace('/orders/list');
+          }).fail(function (xhr, status, error) {
+            if (xhr && xhr.responseText) {
+                alert(xhr.responseText);
+            } else {
+                alert("주문이 실패하였습니다.");
+            }
+          });
+        }
+      }
+    });
+  })
+
+
+  var element_wrap = document.getElementById('wrap');
+
+  function foldDaumPostcode() {
+    element_wrap.style.display = 'none';
+  }
+
+  function sample3_execDaumPostcode() {
+    // 현재 scroll 위치를 저장해놓는다.
+    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        var addr = ''; // 주소 변수
+        var extraAddr = ''; // 참고항목 변수
+
+        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+          addr = data.roadAddress;
+        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+          addr = data.jibunAddress;
+        }
+
+        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+        if (data.userSelectedType === 'R') {
+          // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+          // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+            extraAddr += data.bname;
+          }
+          // 건물명이 있고, 공동주택일 경우 추가한다.
+          if (data.buildingName !== '' && data.apartment === 'Y') {
+            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+          if (extraAddr !== '') {
+            extraAddr = ' (' + extraAddr + ')';
+          }
+          // 조합된 참고항목을 해당 필드에 넣는다.
+          document.getElementById("sample3_extraAddress").value = extraAddr;
+
+        } else {
+          document.getElementById("sample3_extraAddress").value = '';
+        }
+
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        document.getElementById('zipCode').value = data.zonecode;
+        document.getElementById("address").value = addr;
+        // 커서를 상세주소 필드로 이동한다.
+        document.getElementById("detailAddress").focus();
+
+        // iframe을 넣은 element를 안보이게 한다.
+        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+        element_wrap.style.display = 'none';
+
+        // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+        document.body.scrollTop = currentScroll;
+      },
+      // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+      onresize: function (size) {
+        element_wrap.style.height = size.height + 'px';
+      },
+      width: '100%',
+      height: '100%'
+    }).embed(element_wrap);
+
+    // iframe을 넣은 element를 보이게 한다.
+    element_wrap.style.display = 'block';
+  }
+</script>
+
+
+

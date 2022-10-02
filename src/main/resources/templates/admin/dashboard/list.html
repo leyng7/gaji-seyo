@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{admin/layout}"
+>
+
+<div class="row mb-2" layout:fragment="contentHeader">
+    <div class="col-sm-12">
+        <h1 class="m-0">통계</h1>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">월별 판매 (만원)</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart" width="100" height="50"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">누적 판매 (만원)</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart2" width="100" height="50"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+
+  let sumAmount = 0;
+  let sumAmounts = [];
+  const totalAmounts = [[${totalAmounts}]].map(function (amount) {
+    const result = (amount / 10000).toFixed(1);
+    sumAmount += parseFloat(result);
+    sumAmounts.push(sumAmount);
+    return result;
+  });
+
+  let labels = [];
+  for (let i = 1; i < 13; i++) {
+    labels.push(i + '월');
+  }
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: '판매금액',
+      data: totalAmounts,
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+  };
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  new Chart(ctx, config);
+
+
+  const data2 = {
+    labels: labels,
+    datasets: [{
+      label: '누적금액',
+      data: sumAmounts,
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+  };
+
+  const config2 = {
+    type: 'line',
+    data: data2,
+  };
+
+  const ctx2 = document.getElementById('myChart2').getContext('2d');
+  new Chart(ctx2, config2);
+
+</script>
+
+</html>

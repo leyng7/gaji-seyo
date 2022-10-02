@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{admin/layout}"
+>
+
+<div class="row mb-2" layout:fragment="contentHeader">
+    <div class="col-sm-12">
+        <h1 class="m-0">상품내역</h1>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">상품 폼</h3>
+            </div>
+            <form method="post" th:action="@{${#httpServletRequest.requestURI}}" th:object="${itemForm}">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label th:for="name">상품명*</label>
+                        <input th:field="*{name}" type="text" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="price">금액*</label>
+                        <input th:field="*{price}" type="number" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>판매여부*</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{onSale}" value="true">
+                            <label th:for="onSale1" class="form-check-label">판매</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{onSale}" value="false">
+                            <label th:for="onSale2" class="form-check-label">미판매</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="price">재고*</label>
+                        <input th:field="*{stockQuantity}" type="number" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>재고 표시 여부*</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{showStock}" value="true">
+                            <label th:for="showStock1" class="form-check-label">표시</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{showStock}" value="false">
+                            <label th:for="showStock2" class="form-check-label">미표시</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="orderNumber">순서*</label>
+                        <input th:field="*{orderNumber}" type="number" class="form-control" required/>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary float-right">저장</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</html>

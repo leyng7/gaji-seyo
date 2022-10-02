@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="ko"
+      class="h-100"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <title>영덕대게태흥</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+
+        .bg-primary {
+            background-color: #6AF2F0 !important;
+        }
+
+        .nav-item a {
+            color: #7a7f85;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100" style="font-family: 'Noto Sans KR', sans-serif;">
+
+<header class="bg-primary">
+    <div class="container d-flex flex-wrap align-items-center justify-content-center py-3">
+        <ul class="nav nav-pills red">
+            <li class="nav-item"><a th:href="@{/orders/form}" class="nav-link">주문서</a></li>
+            <li class="nav-item"><a th:href="@{/orders/list}" class="nav-link">주문내역</a></li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/orders}" class="nav-link">관리자</a></li>
+            <!--<li class="nav-item"><a th:href="@{/members/form}" class="nav-link">내정보</a></li>-->
+        </ul>
+    </div>
+</header>
+<div layout:fragment="content"></div>
+<footer class="footer mt-auto py-3 bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img style="max-width: 140px;" th:src="@{/images/logo.png}" alt="logo"/>
+            </div>
+            <div class="col-md-4 offset-md-1">
+                <div class="mb-2"><strong>CONTACT</strong></div>
+                <div style="color: #7a7f85; font-size: 12px;">TEL. 054-734-1128</div>
+                <div style="color: #7a7f85; font-size: 12px;">EMAIL. ckadldb@naver.com</div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-2"><strong>SHOP INFO</strong></div>
+                <div style="color: #7a7f85; font-size: 12px;" class="d-flex gap">
+                    <div>
+                        영덕대게태흥, 김승우<br/>
+                        사업자등록번호 844-91-00150
+                    </div>
+                    <div class="ps-2">
+                        경북 영덕군 축산면 차유길 7-1<br/>
+                        2015-경북영덕-0019
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
+<script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.min.js}"></script>
+<script>
+  const message = '[(${message})]';
+  if (message) {
+    alert(message);
+  }
+
+  $(document).ajaxSend(function (e, xhr, options) {
+    xhr.setRequestHeader('[[${_csrf.headerName}]]', '[[${_csrf.token}]]');
+  });
+
+
+  $.fn.serializeObject = function () {
+    "use strict"
+    var result = {}
+    var extend = function (i, element) {
+      var node = result[element.name]
+      if ("undefined" !== typeof node && node !== null) {
+        if ($.isArray(node)) {
+          node.push(element.value)
+        } else {
+          result[element.name] = [node, element.value]
+        }
+      } else {
+        result[element.name] = element.value
+      }
+    }
+
+    $.each(this.serializeArray(), extend)
+    return result
+  }
+
+</script>
+<script layout:fragment="script"></script>
+</body>
+</html>

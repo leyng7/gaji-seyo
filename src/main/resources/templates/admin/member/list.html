@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{admin/layout}"
+>
+
+<div class="row mb-2" layout:fragment="contentHeader">
+    <div class="col-sm-12">
+        <h1 class="m-0">회원관리</h1>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="searchForm" name="searchForm" th:action="@{/admin/members}" method="GET">
+                    <input type="hidden" name="page" th:value="${page.number + 1}"/>
+                    <input type="hidden" name="size" th:value="${page.size}"/>
+                    <div class="d-flex justify-content-between">
+                        <div class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" name="keyword" placeholder="최근 주문자명" th:value="${search.keyword}"/>
+                                <div class="input-group-append" onclick="fn_search();">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <colgroup>
+                        <col style="width: 100px;"/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col/>
+                    </colgroup>
+                    <thead>
+                        <tr class="text-center">
+                            <th>NO</th>
+                            <th>최근 주문자명</th>
+                            <th>최근 주문자연락처</th>
+                            <th>최근 운송장번호</th>
+                            <th>총 주문수</th>
+                            <th>총 주문금액</th>
+                            <th>마지막 주문일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="content : ${page.content}">
+                            <td class="text-center" th:text="${page.totalElements - (page.number * page.size) - contentStat.count + 1}"></td>
+                            <td th:text="${content.ordererName}"></td>
+                            <td th:text="${content.ordererNumber}"></td>
+                            <td th:text="${content.waybillNumber}"></td>
+                            <td th:text="${content.ordersSize}"></td>
+                            <td th:text="${#numbers.formatInteger(content.orderTotalPrice, 0, 'COMMA')}"></td>
+                            <td th:text="${#temporals.format(content.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right"
+                    th:with="totalPages=${page.totalPages == 0 ? 1 : page.totalPages},
+                             start=${T(Math).floor(page.number / 10) * 10 + 1},
+                             last=(${start + 9 < totalPages ? start + 9 : totalPages})"
+                >
+                    <li class="page-item" th:classappend="${page.first} ? 'disabled' : null"><a class="page-link" th:href="'javascript:fn_page(' + ${page.number} + ')'">&laquo;</a></li>
+                    <li class="page-item" th:each="pageNumber: ${#numbers.sequence(start, last)}" th:classappend="${pageNumber == page.number + 1} ? 'active'">
+                        <a class="page-link" th:href="'javascript:fn_page(' + ${pageNumber} + ')'" th:text="${pageNumber}">1</a></li>
+                    </li>
+                    <li class="page-item" th:classappend="${page.last} ? 'disabled' : null"><a class="page-link" th:href="'javascript:fn_page(' + ${page.number + 2} + ')'">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" layout:fragment="script">
+  $('input[name=keyword]').on('keyup', function (e) {
+    if (e.keyCode === 13) {
+      fn_search();
+    }
+  })
+
+  function fn_page(pageNumber) {
+    $("input[name=page]").val(pageNumber);
+    $("#searchForm").submit();
+  }
+
+  function fn_search() {
+    $("input[name=page]").val(1);
+    $("#searchForm").submit();
+  }
+</script>
+</html>

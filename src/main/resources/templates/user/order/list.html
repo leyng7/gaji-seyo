@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{user/layout}"
+>
+<body>
+
+<div class="container py-5" layout:fragment="content">
+    <div class="card mb-3" th:each="content : ${orders}">
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="mb-3">
+                        <h4>주문 상품</h4>
+                        <div class="row" th:each="orderItem : ${content.orderItems}">
+                            <div class="col-md-6" th:text="|${orderItem.itemName} ${#numbers.formatInteger(orderItem.orderPrice, 0, 'COMMA')}원|"></div>
+                            <div class="col-md-6" th:text="|${#numbers.formatInteger(orderItem.orderPrice * orderItem.count, 0, 'COMMA')}원 / ${orderItem.count}개|"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div th:text="${content.depositBank.displayValue}"></div>
+                        <div th:text="|
+                            상품 ${#numbers.formatInteger(content.totalPrice, 0, 'COMMA')}원
+                            택배비 ${#numbers.formatInteger(content.deliveryFee.fee, 0, 'COMMA')}원 |"
+                        ></div>
+                        <strong th:text="|총 ${#numbers.formatInteger(content.deliveryFee.fee + content.totalPrice, 0, 'COMMA')}원 (입금자 ${content.depositorName})|"></strong>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>주문 정보</h4>
+                    <div th:text="|주문일 : ${#temporals.format(content.createdDate, 'yyyy-MM-dd HH:mm')}|"></div>
+                    <div>
+                        <span th:text="|주문자분 : ${content.ordererName}|"></span>
+                        <small th:text="|(${content.ordererNumber})|"></small>
+                    </div>
+                    <div>
+                        <span th:text="|받는분 : ${content.receiverName}|"></span>
+                        <small th:text="|(${content.receiverNumber})|"></small>
+                    </div>
+                    <div th:text="|주소 : [${content.zipCode}] ${content.address} ${content.detailAddress}|"></div>
+                    <div th:if="${!#strings.isEmpty(content.waybillNumber)}">
+                        송장번호 : <a target="_blank" th:href="|https://www.lotteglogis.com/home/reservation/tracking/linkView?InvNo=${content.waybillNumber}|" th:text="${content.waybillNumber}"></a>
+                    </div>
+                    <div th:text="${content.etc}"></div>
+                </div>
+            </div>
+
+            <!--<table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th>주문 내역</th>
+                        <th>주문자</th>
+                        <th>주문자 연락처</th>
+                        <th>받는분</th>
+                        <th>받는분 연락처</th>
+                        <th>주소</th>
+                        <th>입금자</th>
+                        <th>운송장 번호</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="content : ${orders}">
+                        <td th:text="${content.orderDetails}"></td>
+                        <td th:text="${content.ordererName}"></td>
+                        <td th:text="${content.ordererNumber}"></td>
+                        <td th:text="${content.receiverName}"></td>
+                        <td th:text="${content.receiverNumber}"></td>
+                        <td th:text="|[${content.zipCode}] ${content.address} ${content.detailAddress}"></td>
+                        <td th:text="${content.depositorName}"></td>
+                        <td>
+                            <a th:href="|https://www.lotteglogis.com/home/reservation/tracking/linkView?InvNo=${content.waybillNumber}|" th:text="${content.waybillNumber}"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>-->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+

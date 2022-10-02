@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
+
+<ul class="pagination justify-content-center" th:fragment="pagination" th:if="${page.totalPages  > 0}">
+    <li class="page-item" th:if="${page.hasPrevious}">
+        <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+        <a class="page-link" href="#" th:text="${i + 1}"></a>
+    </li>
+    <li class="page-item" th:if="${page.hasNext}">
+        <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</ul>
+
+</html>
