@@ -30,6 +30,7 @@ public class Member extends BaseTimeEntity implements Serializable {
     private Role role;
 
     // 닉네임
+    private String nickname;
 
     // 프로필 사진
 
@@ -41,6 +42,11 @@ public class Member extends BaseTimeEntity implements Serializable {
 
     public Member(String snsKey) {
         this.snsKey = snsKey;
+        this.role = Role.USER;
+    }
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 }
