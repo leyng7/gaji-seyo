@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{user/layout}"
+>
+<body>
+
+<div class="container py-5" layout:fragment="content">
+    <div class="card mb-3" th:each="content : ${list}">
+        <span th:text="${content.title}"></span>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
