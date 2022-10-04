@@ -12,6 +12,8 @@
     "bootstrap": "^5.2.1",
     "handlebars": "^4.7.7",
     "jquery": "^3.6.0",
-    "jquery-validation": "^1.19.3"
+    "jquery-validation": "^1.19.3",
+    "sockjs-client": "^1.6.1",
+    "stomp-websocket": "^2.3.4-next"
   }
 }

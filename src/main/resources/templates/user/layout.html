@@ -3,7 +3,6 @@
       class="h-100"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
     <head>
         <title>가지 마켓</title>
@@ -23,17 +22,20 @@
             <div class="row">
                 <div class="col">
                     <div class="row">
-                        <div class="col">홈</div>
-                        <div class="col">동네생활</div>
-                        <div class="col">내 근처</div>
-                        <div class="col">채팅</div>
-                        <div class="col">나의 당근</div>
+                        <a class="col" href="#">홈</a>
+                        <a class="col" href="#">동네생활</a>
+                        <a class="col" href="#">내 근처</a>
+                        <a class="col" th:href="@{/chat}">채팅</a>
+                        <a class="col" th:href="@{/myInfo}">나의 가지</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+        <script th:src="@{/node_modules/sockjs-client/dist/sockjs.min.js}"></script>
+        <script th:src="@{/node_modules/stomp-websocket/lib/stomp.min.js}"></script>
+        <script th:src="@{/app.js}"></script>
         <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
         <script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
         <script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
