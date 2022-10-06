@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html
-        lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{user/layout}"
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{user/layout}"
 >
 <body>
 
 <div class="container py-5" layout:fragment="content">
-    <div class="card mb-3" th:each="content : ${list}">
-        <span th:text="${content.title}"></span>
-    </div>
+
+  <div class="card mb-3" th:each="content : ${list}">
+    <span th:text="${content.title}"></span>
+    <span th:text="${content.createdDate}"></span>
+    <span th:text="${content.price}"></span>
+    <span th:text="${content.views}"></span>
+  </div>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-primary"
+       th:href="@{/items/save}"
+       role="button">등록</a>
+  </div>
+
 </div>
 
 </body>
 </html>
-
-
-

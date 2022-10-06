@@ -4,14 +4,12 @@ import com.gajiseyo.modules.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Table(name = "TB_ITEM")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item extends BaseEntity {
 
@@ -40,10 +38,20 @@ public class Item extends BaseEntity {
 
   private boolean shared;
 
-  public static Item create(String title) {
-    Item item = new Item();
-    item.setTitle(title);
-    return item;
+  public Item(String title, Category category, long price, boolean suggested, boolean shared, String contents, int views, Status status, boolean removed) {
+    this.title = title;
+    this.category = category;
+    this.price = price;
+    this.suggested = suggested;
+    this.shared = shared;
+    this.contents = contents;
+    this.views = views;
+    this.status = status;
+    this.removed = removed;
+  }
+
+  public static Item create(String title, Category category, long price, boolean suggested, boolean shared, String contents, int views, Status status, boolean removed) {
+    return new Item(title, category, price, suggested, shared, contents, views, status, removed);
   }
 
 }
