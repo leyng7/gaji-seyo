@@ -1,5 +1,6 @@
 package com.gajiseyo;
 
+import com.gajiseyo.modules.item.repository.ItemRepository;
 import com.gajiseyo.modules.member.repository.MemberRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +17,8 @@ public class GajiSeyoApplication {
 
     @Bean
     @Profile("local")
-    public TestDataInit testDataInit(MemberRepository memberRepository) {
-        return new TestDataInit(memberRepository);
+    public TestDataInit testDataInit(MemberRepository memberRepository, ItemRepository itemRepository) {
+        return new TestDataInit(memberRepository, itemRepository);
     }
 
 }

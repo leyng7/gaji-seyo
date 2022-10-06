@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Status {
 
-  SALE("ÆÇ¸Å"),
-  RESERVED("¿¹¾à"),
-  SOLD_OUT("ÆÇ¸Å ¿Ï·á");
+  SALE("íŒë§¤"),
+  RESERVED("ì˜ˆì•½"),
+  SOLD_OUT("íŒë§¤ ì™„ë£Œ");
 
   private final String displayValue;
 

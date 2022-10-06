@@ -4,74 +4,74 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-    <head>
-        <title>가지 마켓</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="_csrf" th:content="${_csrf?.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-    </head>
-    <body>
+<head>
+  <title>가지 마켓</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="_csrf" th:content="${_csrf?.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
 
-        <header></header>
+<header></header>
 
-        <div layout:fragment="content"></div>
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <a class="col" href="#">홈</a>
+        <a class="col" href="#">동네생활</a>
+        <a class="col" href="#">내 근처</a>
+        <a class="col" th:href="@{/chat}">채팅</a>
+        <a class="col" th:href="@{/myInfo}">나의 가지</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <div class="container text-center">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <a class="col" href="#">홈</a>
-                        <a class="col" href="#">동네생활</a>
-                        <a class="col" href="#">내 근처</a>
-                        <a class="col" th:href="@{/chat}">채팅</a>
-                        <a class="col" th:href="@{/myInfo}">나의 가지</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div layout:fragment="content"></div>
 
-        <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
-        <script th:src="@{/node_modules/sockjs-client/dist/sockjs.min.js}"></script>
-        <script th:src="@{/node_modules/stomp-websocket/lib/stomp.min.js}"></script>
-        <script th:src="@{/app.js}"></script>
-        <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
-        <script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
-        <script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
-        <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.min.js}"></script>
-        <script>
-          const message = '[(${message})]';
-          if (message) {
-            alert(message);
-          }
+<script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/node_modules/sockjs-client/dist/sockjs.min.js}"></script>
+<script th:src="@{/node_modules/stomp-websocket/lib/stomp.min.js}"></script>
+<script th:src="@{/app.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
+<script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.min.js}"></script>
+<script>
+  const message = '[(${message})]';
+  if (message) {
+    alert(message);
+  }
 
-          $(document).ajaxSend(function (e, xhr, options) {
-            xhr.setRequestHeader('[[${_csrf?.headerName}]]', '[[${_csrf?.token}]]');
-          });
+  $(document).ajaxSend(function (e, xhr, options) {
+    xhr.setRequestHeader('[[${_csrf?.headerName}]]', '[[${_csrf?.token}]]');
+  });
 
 
-          $.fn.serializeObject = function () {
-            "use strict"
-            var result = {}
-            var extend = function (i, element) {
-              var node = result[element.name]
-              if ("undefined" !== typeof node && node !== null) {
-                if ($.isArray(node)) {
-                  node.push(element.value)
-                } else {
-                  result[element.name] = [node, element.value]
-                }
-              } else {
-                result[element.name] = element.value
-              }
-            }
+  $.fn.serializeObject = function () {
+    "use strict"
+    var result = {}
+    var extend = function (i, element) {
+      var node = result[element.name]
+      if ("undefined" !== typeof node && node !== null) {
+        if ($.isArray(node)) {
+          node.push(element.value)
+        } else {
+          result[element.name] = [node, element.value]
+        }
+      } else {
+        result[element.name] = element.value
+      }
+    }
 
-            $.each(this.serializeArray(), extend)
-            return result
-          }
+    $.each(this.serializeArray(), extend)
+    return result
+  }
 
-        </script>
-        <script layout:fragment="script"></script>
-    </body>
+</script>
+<script layout:fragment="script"></script>
+</body>
 </html>

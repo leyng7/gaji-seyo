@@ -7,26 +7,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Category {
 
-  DIGITAL_DEVICE("µðÁöÅÐ±â±â"),
-  HOUSEHOLD_APPLIANCES("»ýÈ°°¡Àü"),
-  FURNITURE("°¡±¸"),
-  LIVING("»ýÈ°"),
-  INFANT_CHILD("À¯¾Æµ¿"),
-  CHILDREN_BOOKS("À¯¾Æ µµ¼­"),
-  WOMEN_CLOTHING("¿©¼º ÀÇ·ù"),
-  WOMEN_ACCESSORIES("¿©¼º ÀâÈ­"),
-  MEN_FASHION_ACCESSORIES("³²¼º ÆÐ¼ÇÀâÈ­"),
-  BEAUTY("¹Ì¿ë"),
-  SPORTS("½ºÆ÷Ã÷"),
-  HOBBY_GAME_RECORD("Ãë¹Ì °ÔÀÓ À½¹Ý"),
-  BOOKS("µµ¼­"),
-  USED_CAR("Áß°íÂ÷"),
-  TICKET("Æ¼ÄÏ"),
-  PROCESSED_FOOD("°¡°ø½ÄÇ°"),
-  PET_SUPPLIES("¹Ý·Áµ¿¹°¿ëÇ°"),
-  PLANT("½Ä¹°"),
-  ETC("±âÅ¸"),
-  BUY("»ð´Ï´Ù");
+  DIGITAL_DEVICE("ë””ì§€í„¸ê¸°ê¸°"),
+  HOUSEHOLD_APPLIANCES("ìƒí™œê°€ì „"),
+  FURNITURE("ê°€êµ¬"),
+  LIVING("ìƒí™œ"),
+  INFANT_CHILD("ìœ ì•„ë™"),
+  CHILDREN_BOOKS("ìœ ì•„ ë„ì„œ"),
+  WOMEN_CLOTHING("ì—¬ì„± ì˜ë¥˜"),
+  WOMEN_ACCESSORIES("ì—¬ì„± ìž¡í™”"),
+  MEN_FASHION_ACCESSORIES("ë‚¨ì„± íŒ¨ì…˜ìž¡í™”"),
+  BEAUTY("ë¯¸ìš©"),
+  SPORTS("ìŠ¤í¬ì¸ "),
+  HOBBY_GAME_RECORD("ì·¨ë¯¸ ê²Œìž„ ìŒë°˜"),
+  BOOKS("ë„ì„œ"),
+  USED_CAR("ì¤‘ê³ ì°¨"),
+  TICKET("í‹°ì¼“"),
+  PROCESSED_FOOD("ê°€ê³µì‹í’ˆ"),
+  PET_SUPPLIES("ë°˜ë ¤ë™ë¬¼ìš©í’ˆ"),
+  PLANT("ì‹ë¬¼"),
+  ETC("ê¸°íƒ€"),
+  BUY("ì‚½ë‹ˆë‹¤");
 
   private final String displayValue;
 
