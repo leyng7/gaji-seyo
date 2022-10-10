@@ -6,41 +6,20 @@
         layout:decorate="~{user/layout}"
 >
     <body>
-
         <div class="container py-5" layout:fragment="content">
-            <div class="row justify-content-center mb-3">
-                <div class="col-lg-6">
-                    <div id="chatBox">
-                        <table id="conversation"
-                               th:data-id="1"
-                               class="table table-striped"
-                        >
-                            <thead>
-                                <tr>
-                                    <th colspan="2">채팅방</th>
-                                </tr>
-                            </thead>
-                            <tbody id="greetings">
-                            </tbody>
-                        </table>
+            <div class="card mb-1" th:each="chatRoom : ${chatRoomList}">
+                <a class="row g-0" th:href="@{/chat/__${chatRoom.id}__}">
+                    <div class="col-2 d-flex align-items-center">
+                        <img src="/AdminLTE-3.1.0/img/AdminLTELogo.png" class="img-fluid rounded-start" alt="...">
                     </div>
-                    <textarea id="chatMessage" class="form-control"></textarea>
-                </div>
+                    <div class="col-10">
+                        <div class="card-body">
+                            <h5 class="card-title">현수 <small class="text-muted">1주 전</small></h5>
+                            <p class="card-text">네~ 오시느라 고생 많으셨습니다..</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
-        <script layout:fragment="script" th:inline="javascript">
-          const id = document.getElementById("conversation").dataset.id;
-          let chatMessage = document.getElementById("chatMessage");
-
-          connect(id);
-
-          chatMessage.addEventListener('keypress', function (event) {
-            if (event.key === 'Enter') {
-              event.preventDefault();
-              sendName(id, chatMessage.value);
-              chatMessage.value = '';
-            }
-          });
-        </script>
     </body>
 </html>

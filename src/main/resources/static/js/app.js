@@ -9,7 +9,6 @@ function setConnected(connected) {
     else {
         $("#conversation").hide();
     }
-    $("#greetings").html("");
 }
 
 function connect(id) {
@@ -21,7 +20,6 @@ function connect(id) {
         stompClient.subscribe('/topic/greetings/' + id, function (greeting) {
             showGreeting(JSON.parse(greeting.body));
         });
-        sendName(id, "님이 접속했습니다.");
     });
 }
 
@@ -42,5 +40,5 @@ function sendName(id, message) {
 }
 
 function showGreeting({ nickName, message }) {
-    $("#greetings").append("<tr><td style='width: 100px;'>" + nickName + "</td><td>" + message + "</td></tr>");
+    $("#greetings").append("<tr><td>" + nickName + "</td><td>" + message + "</td></tr>");
 }

@@ -46,9 +46,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // 유저 생성 및 수정 서비스 로직
     private Member getMember(OAuthAttributes attributes) {
         String snsKey = attributes.getSnsKey();
-
-        return memberRepository.findBySnsKey(snsKey)
-                .orElse(new Member(snsKey));
+        return memberRepository.findBySnsKey(snsKey).orElseGet(() -> {
+            Member member = new Member(snsKey);
+            memberRepository.save(member);
+            return member;
+        });
     }
 
 }

@@ -3,6 +3,7 @@ package com.gajiseyo.modules.member.domain;
 
 import com.gajiseyo.modules.common.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(of = "id")
 public class Member extends BaseTimeEntity implements Serializable {
 
     private static final long serialVersionUID = 2438826685859396244L;
