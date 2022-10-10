@@ -30,6 +30,7 @@ public class SecurityConfig {
                         "/.well-known/**"
                 ).permitAll()
                 .mvcMatchers(
+                        "/items/**",
                         "/chat/**",
                         "/topic/**",
                         "/app/**",

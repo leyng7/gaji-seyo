@@ -2,7 +2,6 @@ package com.gajiseyo;
 
 import com.gajiseyo.modules.item.domain.Category;
 import com.gajiseyo.modules.item.domain.Item;
-import com.gajiseyo.modules.item.domain.Status;
 import com.gajiseyo.modules.item.repository.ItemRepository;
 import com.gajiseyo.modules.member.domain.Member;
 import com.gajiseyo.modules.member.repository.MemberRepository;
@@ -34,10 +33,7 @@ public class TestDataInit {
             5000,
             true,
             false,
-            "신선하고 맛있는 가지 사세요 ~",
-            0,
-            Status.SALE,
-            false
+            "신선하고 맛있는 가지 사세요 ~"
         );
 
         itemRepository.save(item);

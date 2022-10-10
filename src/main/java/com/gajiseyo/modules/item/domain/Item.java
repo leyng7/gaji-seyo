@@ -38,20 +38,29 @@ public class Item extends BaseEntity {
 
   private boolean shared;
 
-  public Item(String title, Category category, long price, boolean suggested, boolean shared, String contents, int views, Status status, boolean removed) {
+  private Item(String title, Category category, long price, boolean suggested, boolean shared, String contents) {
     this.title = title;
     this.category = category;
     this.price = price;
     this.suggested = suggested;
     this.shared = shared;
     this.contents = contents;
-    this.views = views;
-    this.status = status;
-    this.removed = removed;
+    this.views = 0;
+    this.status = Status.SALE;
+    this.removed = false;
   }
 
-  public static Item create(String title, Category category, long price, boolean suggested, boolean shared, String contents, int views, Status status, boolean removed) {
-    return new Item(title, category, price, suggested, shared, contents, views, status, removed);
+  public static Item create(String title, Category category, long price, boolean suggested, boolean shared, String contents) {
+    return new Item(title, category, price, suggested, shared, contents);
+  }
+
+  public void update(String title, Category category, long price, boolean suggested, boolean shared, String contents) {
+    this.title = title;
+    this.category = category;
+    this.price = price;
+    this.suggested = suggested;
+    this.shared = shared;
+    this.contents = contents;
   }
 
 }

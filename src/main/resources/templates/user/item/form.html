@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{user/layout}"
+>
+
+<div class="container py-5" layout:fragment="content">
+  <div class="row">
+    <div class="card col-md-6 offset-md-3">
+      <form id="insertForm" class="card-body" method="post" th:action="@{/items/form}" th:object="${form}">
+        <h2 class="text-center mb-5">가지마켓 가지 등록</h2>
+
+        <div class="mb-3">
+          <label th:for="title" class="form-label" style="font-weight: bold;">제목</label>
+          <input type="text" class="form-control" th:field="*{title}" required="required" title="주문자분 성함"/>
+        </div>
+        <div class="mb-3">
+          <label th:for="category" class="form-label" style="font-weight: bold;">카테고리 선택</label>
+          <input type="text" class="form-control" th:field="*{category}" required="required" title="주문자분 전화번호"/>
+        </div>
+        <div class="mb-3">
+          <label th:for="price" class="form-label" style="font-weight: bold;">가격</label>
+          <input type="text" class="form-control" th:field="*{price}" required="required" title="주문자분 전화번호"/>
+        </div>
+        <div class="mb-3">
+          <label th:for="suggested" class="form-label" style="font-weight: bold;">가격 제안받기</label>
+          <input type="text" class="form-control" th:field="*{suggested}" required="required" title="주문자분 전화번호"/>
+        </div>
+        <div class="mb-3">
+          <label th:for="shared" class="form-label" style="font-weight: bold;">나눔</label>
+          <input type="text" class="form-control" th:field="*{shared}" required="required" title="입금자분 성함"/>
+        </div>
+        <div class="mb-3">
+          <label th:for="contents" class="form-label" style="font-weight: bold;">내용</label>
+          <input type="text" class="form-control" th:field="*{contents}" required="required" title="입금자분 성함"/>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary">등록하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
