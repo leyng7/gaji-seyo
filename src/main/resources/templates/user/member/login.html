@@ -7,14 +7,10 @@
 >
 
 <div layout:fragment="content">
-    <div class="container-fluid py-5">
-        <div class="card col-md-6 offset-md-3">
-            <div class="card-body py-5 text-center">
-                <a th:href="@{/oauth2/authorization/naver}">
-                    <img style="max-width: 250px;" th:src="@{/images/naver/login_btn.png}" alt="네이버 로그인"/>
-                </a>
-            </div>
-        </div>
+    <div class="container-fluid py-5 text-center">
+        <a th:href="@{/oauth2/authorization/naver}">
+            <img style="max-width: 250px;" th:src="@{/images/naver/login_btn.png}" alt="네이버 로그인"/>
+        </a>
     </div>
 </div>
 

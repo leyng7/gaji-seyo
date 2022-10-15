@@ -11,21 +11,30 @@
         <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/node_modules/@fortawesome/fontawesome-free/css/all.min.css}" rel="stylesheet">
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100 bg-dark">
         <header>
             <nav class="navbar">
-                <div class="container">
-                    <a class="navbar-brand" href="#">
+                <div class="container d-flex align-content-between">
+                    <a class="navbar-brand text-light" href="#">
                         가지마켓
                     </a>
+                    <div>
+                        <a class="me-2" href="">
+                            <i class="text-light fa-xl fa-solid fa-magnifying-glass"></i>
+                        </a>
+                        <a href="">
+                            <i class="text-light fa-xl fa-regular fa-bell"></i>
+                        </a>
+                    </div>
                 </div>
             </nav>
         </header>
 
         <div layout:fragment="content"></div>
 
-        <div class="container">
+        <div class="container mt-auto">
             <ul class="nav nav-pills nav-fill">
                 <li class="nav-item">
                     <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}" th:href="@{/items}">홈</a>
