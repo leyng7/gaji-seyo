@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -44,4 +47,13 @@ public class ItemService {
         );
 
     }
+
+    public List<Item> findAll() {
+        return itemRepository.findAll();
+    }
+
+    public Optional<Item> findById(Long itemId) {
+        return itemRepository.findById(itemId);
+    }
+
 }

@@ -4,93 +4,96 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-    <head>
-        <title>가지 마켓</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="_csrf" th:content="${_csrf?.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-        <link th:href="@{/node_modules/@fortawesome/fontawesome-free/css/all.min.css}" rel="stylesheet">
-    </head>
-    <body class="d-flex flex-column min-vh-100 bg-dark">
-        <header>
-            <nav class="navbar">
-                <div class="container d-flex align-content-between">
-                    <a class="navbar-brand text-light" href="#">
-                        가지마켓
-                    </a>
-                    <div>
-                        <a class="me-2" href="">
-                            <i class="text-light fa-xl fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="">
-                            <i class="text-light fa-xl fa-regular fa-bell"></i>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <div layout:fragment="content"></div>
-
-        <div class="container mt-auto">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}" th:href="@{/items}">홈</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">가지생활</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/chat' ? 'active' : ''}" th:href="@{/chat}">채팅</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/myInfo' ? 'active' : ''}" th:href="@{/myInfo}">나의가지</a>
-                </li>
-            </ul>
+<head>
+    <title>가지 마켓</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="_csrf" th:content="${_csrf?.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/node_modules/@fortawesome/fontawesome-free/css/all.min.css}" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header class="border-bottom mb-3">
+    <nav class="navbar p-2">
+        <div class="container d-flex align-content-between">
+            <a class="navbar-brand" href="/items">
+                <h5 class="title">🍆 가지마켓</h5>
+            </a>
+            <div>
+                <a class="me-2 text-decoration-none text-dark" href="">
+                    <i class="fa-xl fa-solid fa-magnifying-glass"></i>
+                </a>
+                <a class="text-dark" href="">
+                    <i class="fa-xl fa-regular fa-bell"></i>
+                </a>
+            </div>
         </div>
+    </nav>
+</header>
 
-        <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
-        <script th:src="@{/node_modules/sockjs-client/dist/sockjs.min.js}"></script>
-        <script th:src="@{/node_modules/stomp-websocket/lib/stomp.min.js}"></script>
-        <script th:src="@{/js/app.js}"></script>
-        <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
-        <script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
-        <script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
-        <script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.min.js}"></script>
-        <script>
-          const message = '[(${message})]';
-          if (message) {
-            alert(message);
-          }
+<div layout:fragment="content"></div>
 
-          $(document).ajaxSend(function (e, xhr, options) {
-            xhr.setRequestHeader('[[${_csrf?.headerName}]]', '[[${_csrf?.token}]]');
-          });
+<div class="container mt-auto">
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}"
+               th:href="@{/items}">홈</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">가지생활</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/chat' ? 'active' : ''}"
+               th:href="@{/chat}">채팅</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/myInfo' ? 'active' : ''}"
+               th:href="@{/myInfo}">나의가지</a>
+        </li>
+    </ul>
+</div>
+
+<script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/node_modules/sockjs-client/dist/sockjs.min.js}"></script>
+<script th:src="@{/node_modules/stomp-websocket/lib/stomp.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+<script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/AdminLTE-3.1.0/plugins/inputmask/jquery.inputmask.min.js}"></script>
+<script th:src="@{/node_modules/handlebars/dist/handlebars.min.js}"></script>
+<script th:src="@{/node_modules/jquery-validation/dist/jquery.validate.min.js}"></script>
+<script>
+  const message = '[(${message})]';
+  if (message) {
+    alert(message);
+  }
+
+  $(document).ajaxSend(function (e, xhr, options) {
+    xhr.setRequestHeader('[[${_csrf?.headerName}]]', '[[${_csrf?.token}]]');
+  });
 
 
-          $.fn.serializeObject = function () {
-            "use strict"
-            var result = {}
-            var extend = function (i, element) {
-              var node = result[element.name]
-              if ("undefined" !== typeof node && node !== null) {
-                if ($.isArray(node)) {
-                  node.push(element.value)
-                } else {
-                  result[element.name] = [node, element.value]
-                }
-              } else {
-                result[element.name] = element.value
-              }
-            }
+  $.fn.serializeObject = function () {
+    "use strict"
+    var result = {}
+    var extend = function (i, element) {
+      var node = result[element.name]
+      if ("undefined" !== typeof node && node !== null) {
+        if ($.isArray(node)) {
+          node.push(element.value)
+        } else {
+          result[element.name] = [node, element.value]
+        }
+      } else {
+        result[element.name] = element.value
+      }
+    }
 
-            $.each(this.serializeArray(), extend)
-            return result
-          }
+    $.each(this.serializeArray(), extend)
+    return result
+  }
 
-        </script>
-        <script layout:fragment="script"></script>
-    </body>
+</script>
+<script layout:fragment="script"></script>
+</body>
 </html>

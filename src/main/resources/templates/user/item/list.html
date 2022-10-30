@@ -7,20 +7,35 @@
 >
 <body>
 
-<div class="container py-5" layout:fragment="content">
+<div class="container" layout:fragment="content">
 
-  <div class="card mb-3" th:each="content : ${list}">
-    <span th:text="${content.title}"></span>
-    <span th:text="${content.createdDate}"></span>
-    <span th:text="${content.price}"></span>
-    <span th:text="${content.views}"></span>
-  </div>
+    <div th:each="content : ${list}" class="card mb-3 text-decoration-none p-2">
+        <a th:href="@{/items/{id}(id=${content.id})}" class="text-decoration-none text-dark" role="button">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img th:src="@{/images/b3.png}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><span th:text="${content.title}"></span></h5>
+                        <p class="card-text"><small class="text-muted"><span
+                            th:text="${#temporals.format(content.createdDate, 'yyyy-MM-dd')}"></span></small></p>
+                        <p class="card-text"><span
+                            th:text="${#numbers.formatInteger(content.price, 0, 'COMMA')}"></span>원</p>
+                        <p class="card-text"><small class="text-muted"><span th:text="${content.views}"></span></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
 
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-primary"
-       th:href="@{/items/form}"
-       role="button">등록</a>
-  </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary"
+           th:href="@{/items/form}"
+           role="button">등록</a>
+    </div>
 
 </div>
 

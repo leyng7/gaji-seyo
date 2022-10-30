@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{user/layout}"
+>
+<body>
+
+<div class="container py-5" layout:fragment="content">
+
+    <div class="card mb-3">
+        <span th:text="${item.title}"></span>
+        <span th:text="${item.createdDate}"></span>
+        <span th:text="${item.price}"></span>
+        <span th:text="${item.views}"></span>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+    </div>
+
+</div>
+
+</body>
+</html>
