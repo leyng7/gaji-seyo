@@ -3,39 +3,45 @@ package com.gajiseyo.modules.item.service;
 import com.gajiseyo.modules.item.domain.Item;
 import com.gajiseyo.modules.item.dto.ItemForm;
 import com.gajiseyo.modules.item.repository.ItemRepository;
+import com.gajiseyo.modules.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ItemService {
 
-  private final ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
-  public void insert(ItemForm form) {
-    Item item = Item.create(
-        form.getTitle(),
-        form.getCategory(),
-        form.getPrice(),
-        form.isSuggested(),
-        form.isShared(),
-        form.getContents()
-    );
+    @Transactional
+    public void insert(ItemForm form, Member createdBy) {
 
-    itemRepository.save(item);
-  }
+        Item item = Item.create(
+                form.getTitle(),
+                form.getCategory(),
+                form.getPrice(),
+                form.isSuggested(),
+                form.isShared(),
+                form.getContents(),
+                createdBy
+        );
 
-  public void update(Long itemId, ItemForm form) {
-    Item item = itemRepository.findById(itemId).orElseThrow();
+        itemRepository.save(item);
+    }
 
-    item.update(
-        form.getTitle(),
-        form.getCategory(),
-        form.getPrice(),
-        form.isSuggested(),
-        form.isShared(),
-        form.getContents()
-    );
+    public void update(Long itemId, ItemForm form) {
+        Item item = itemRepository.findById(itemId).orElseThrow();
 
-  }
+        item.update(
+                form.getTitle(),
+                form.getCategory(),
+                form.getPrice(),
+                form.isSuggested(),
+                form.isShared(),
+                form.getContents()
+        );
+
+    }
 }

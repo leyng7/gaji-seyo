@@ -18,7 +18,12 @@
         </div>
         <div class="mb-3">
           <label th:for="category" class="form-label" style="font-weight: bold;">카테고리 선택</label>
-          <input type="text" class="form-control" th:field="*{category}" required="required" title="주문자분 전화번호"/>
+          <select class="form-control" th:field="*{category}" required="required" title="주문자분 전화번호">
+            <option th:each="category : ${T(com.gajiseyo.modules.item.domain.Category).values()}"
+                    th:value="${category}"
+                    th:text="${category.displayValue}"
+            ></option>
+          </select>
         </div>
         <div class="mb-3">
           <label th:for="price" class="form-label" style="font-weight: bold;">가격</label>

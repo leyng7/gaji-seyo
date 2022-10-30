@@ -27,7 +27,8 @@ public class SecurityConfig {
                         "/",
                         "/login",
                         "/livereload.js",
-                        "/.well-known/**"
+                        "/.well-known/**",
+                        "/h2-console/**"
                 ).permitAll()
                 .mvcMatchers(
                         "/items/**",
@@ -36,8 +37,7 @@ public class SecurityConfig {
                         "/app/**",
                         "/gs-guide-websocket/**",
                         "/myInfo/**"
-                ).hasAnyRole("USER", "ADMIN")
-                .anyRequest().denyAll();
+                ).hasAnyRole("USER", "ADMIN");
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -45,7 +45,7 @@ public class SecurityConfig {
 
         http.formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/orders/form");
+                .defaultSuccessUrl("/");
 
         http.oauth2Login()
                 .loginPage("/oauth")

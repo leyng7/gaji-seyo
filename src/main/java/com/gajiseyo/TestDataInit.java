@@ -28,12 +28,13 @@ public class TestDataInit {
         memberRepository.save(member);
 
         Item item = Item.create(
-            "가지 팝니다.",
-            Category.PROCESSED_FOOD,
-            5000,
-            true,
-            false,
-            "신선하고 맛있는 가지 사세요 ~"
+                "가지 팝니다.",
+                Category.PROCESSED_FOOD,
+                5000,
+                true,
+                false,
+                "신선하고 맛있는 가지 사세요 ~",
+                member
         );
 
         itemRepository.save(item);
