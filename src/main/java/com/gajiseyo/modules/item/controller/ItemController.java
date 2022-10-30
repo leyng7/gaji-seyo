@@ -1,7 +1,7 @@
 package com.gajiseyo.modules.item.controller;
 
+import com.gajiseyo.modules.item.domain.Item;
 import com.gajiseyo.modules.item.dto.ItemForm;
-import com.gajiseyo.modules.item.repository.ItemRepository;
 import com.gajiseyo.modules.item.service.ItemService;
 import com.gajiseyo.modules.member.auth.CurrentUser;
 import com.gajiseyo.modules.member.domain.Member;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,19 +18,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class ItemController {
 
-  private final ItemRepository itemRepository;
   private final ItemService itemService;
 
   @GetMapping("/items")
   public String list(Model model) {
 
-    model.addAttribute("list", itemRepository.findAll());
+    model.addAttribute("list", itemService.findAll());
     return "user/item/list";
   }
 
   @GetMapping("/items/form")
   public String form(@ModelAttribute("form") ItemForm form,
-                           Model model) {
+                     Model model) {
 
     model.addAttribute("form", form);
     return "user/item/form";
@@ -44,6 +44,17 @@ public class ItemController {
 
     rttr.addFlashAttribute("message", "당신의 소중한 가지가 정상적으로 등록되었습니다.");
     return "redirect:/items";
+  }
+
+  @GetMapping("/items/{id}")
+  public String view(@PathVariable("id") Long itemId,
+                     @CurrentUser Member currentUser,
+                     Model model) {
+
+    Item item = itemService.findById(itemId).orElseThrow();
+    model.addAttribute("item", item);
+
+    return "user/item/view";
   }
 
 }
