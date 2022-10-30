@@ -32,7 +32,7 @@ public class ChatService {
     }
 
     @Transactional
-    public void saveChatMessage(Long chatRoomId, Member member, String message) {
+    public ChatMessage saveChatMessage(Long chatRoomId, Member member, String message) {
 
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow();
 
@@ -43,5 +43,7 @@ public class ChatService {
         );
 
         chatMessageRepository.save(chatMessage);
+
+        return chatMessage;
     }
 }

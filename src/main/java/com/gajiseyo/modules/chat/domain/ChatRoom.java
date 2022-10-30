@@ -6,7 +6,6 @@ import com.gajiseyo.modules.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 
@@ -26,12 +25,20 @@ public class ChatRoom extends BaseTimeEntity {
     private Item item;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", updatable = false)
     private Member seller;
 
-    @CreatedBy
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "buyer_id", updatable = false)
     private Member buyer;
 
+    public ChatRoom(Item item, Member seller, Member buyer) {
+        this.item = item;
+        this.seller = seller;
+        this.buyer = buyer;
+    }
+
+    public static ChatRoom create(Item item, Member seller, Member buyer) {
+        return new ChatRoom(item, seller, buyer);
+    }
 }

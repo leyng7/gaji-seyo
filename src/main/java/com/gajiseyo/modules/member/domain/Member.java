@@ -3,18 +3,18 @@ package com.gajiseyo.modules.member.domain;
 
 import com.gajiseyo.modules.common.BaseTimeEntity;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Table(name = "TB_MEMBER")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(of = "id")
 public class Member extends BaseTimeEntity implements Serializable {
 
     private static final long serialVersionUID = 2438826685859396244L;
@@ -49,6 +49,19 @@ public class Member extends BaseTimeEntity implements Serializable {
 
     public void changeNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Member member = (Member) o;
+        return id != null && Objects.equals(id, member.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
 }
