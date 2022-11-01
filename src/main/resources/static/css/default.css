@@ -1,0 +1,60 @@
+.btn-gaji {
+    color: #fff;
+    background-color: #916dd5;
+    border-color: #916dd5;
+    box-shadow: none;
+}
+
+.btn-gaji:hover {
+    color: #fff;
+    background-color: #7151a9;
+    border-color: #573d7f;
+}
+
+.btn-gaji:focus, .btn-gaji.focus {
+    color: #fff;
+    background-color: #7151a9;
+    border-color: #573d7f;
+    box-shadow: 0 0 0 0 rgb(70, 50, 93);
+}
+
+.btn-gaji.disabled, .btn-gaji:disabled {
+    color: #fff;
+    background-color: #916dd5;
+    border-color: #916dd5;
+}
+
+.btn-gaji:not(:disabled):not(.disabled):active, .btn-gaji:not(:disabled):not(.disabled).active,
+.show > .btn-gaji.dropdown-toggle {
+    color: #fff;
+    background-color: #573d7f;
+    border-color: #46325d;
+}
+
+.btn-gaji:not(:disabled):not(.disabled):active:focus, .btn-gaji:not(:disabled):not(.disabled).active:focus,
+.show > .btn-gaji.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 rgb(70, 50, 93);
+}
+
+.nav-pills .nav-link {
+    border-radius: 0.25rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link
+.gaji-pills {
+    color: #fff;
+    background-color: #916dd5;
+}
+
+.nav-pills .nav-link .gaji-pills {
+    color: #6c757d;
+}
+
+.nav-pills .nav-link:not(.active):hover .gaji-pills {
+    color: #916dd5;
+}
+
+.nav-pills .nav-item.dropdown.show .nav-link:hover .gaji-pills {
+    color: #fff;
+}

@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/node_modules/@fortawesome/fontawesome-free/css/all.min.css}" rel="stylesheet">
+    <link th:href="@{/css/default.css}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
 <header class="border-bottom mb-3">
@@ -35,7 +36,7 @@
 <div layout:fragment="content"></div>
 
 <div class="container mt-auto">
-    <ul class="nav nav-pills nav-fill">
+    <ul class="nav nav-pills nav-fill gaji-pills">
         <li class="nav-item">
             <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}"
                th:href="@{/items}">홈</a>

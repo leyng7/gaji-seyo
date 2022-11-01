@@ -15,7 +15,7 @@ public class ItemForm {
   @Enumerated(EnumType.STRING)
   private Category category;
 
-  private long price;
+  private Long price;
 
   private boolean suggested;
 

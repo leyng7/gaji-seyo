@@ -26,7 +26,7 @@ public class Item extends BaseTimeEntity {
 
     private String contents;
 
-    private long price;
+    private Long price;
 
     private int views;
 
