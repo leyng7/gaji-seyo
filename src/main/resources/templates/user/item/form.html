@@ -10,39 +10,40 @@
   <div class="row">
     <div class="card col-md-6 offset-md-3">
       <form id="insertForm" class="card-body" method="post" th:action="@{/items/form}" th:object="${form}">
-        <h2 class="text-center mb-5">가지마켓 가지 등록</h2>
+        <h2 class="text-center mb-5 p-3">가지마켓 가지 등록</h2>
 
-        <div class="mb-3">
-          <label th:for="title" class="form-label" style="font-weight: bold;">제목</label>
-          <input type="text" class="form-control" th:field="*{title}" required="required" title="주문자분 성함"/>
+        <div class="mb-3 p-2">
+          <input type="text" class="form-control" th:field="*{title}" required="required" placeholder="제목을 입력해주세요." title="제목을 입력해주세요."/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 p-2">
           <label th:for="category" class="form-label" style="font-weight: bold;">카테고리 선택</label>
-          <select class="form-control" th:field="*{category}" required="required" title="주문자분 전화번호">
+          <select class="form-control" th:field="*{category}" required="required" title="카테고리를 선택해주세요.">
             <option th:each="category : ${T(com.gajiseyo.modules.item.domain.Category).values()}"
                     th:value="${category}"
                     th:text="${category.displayValue}"
             ></option>
           </select>
         </div>
-        <div class="mb-3">
-          <label th:for="price" class="form-label" style="font-weight: bold;">가격</label>
-          <input type="text" class="form-control" th:field="*{price}" required="required" title="주문자분 전화번호"/>
+        <div class="mb-3 p-2">
+          <div class="row">
+            <div class="col-10">
+              <input type="text" class="form-control" th:field="*{price}" placeholder="￦ 가격을 입력해주세요." title="가격을 입력해주세요."/>
+            </div>
+            <div class="col">
+              <input type="checkbox" class="form-check-input" id="shared" th:field="*{shared}" title="나눔을 선택해주세요."/>
+              <label th:for="shared" class="form-label" style="font-weight: bold;">나눔</label>
+            </div>
+          </div>
+          <div class="p-2">
+            <input type="checkbox" class="form-check-input" id="suggested" th:field="*{suggested}" title="가격 제안을 선택해주세요."/>
+            <label th:for="suggested" class="form-label" style="font-weight: bold;">가격 제안받기</label>
+          </div>
         </div>
-        <div class="mb-3">
-          <label th:for="suggested" class="form-label" style="font-weight: bold;">가격 제안받기</label>
-          <input type="text" class="form-control" th:field="*{suggested}" required="required" title="주문자분 전화번호"/>
+        <div class="mb-3 p-2">
+          <textarea class="form-control" rows="5" th:field="*{contents}" required="required" placeholder="내용을 작성해주세요. (가품 및 판매 금지 물품은 게시가 제한될 수 있어요.)" title="내용을 입력해주세요."/>
         </div>
-        <div class="mb-3">
-          <label th:for="shared" class="form-label" style="font-weight: bold;">나눔</label>
-          <input type="text" class="form-control" th:field="*{shared}" required="required" title="입금자분 성함"/>
-        </div>
-        <div class="mb-3">
-          <label th:for="contents" class="form-label" style="font-weight: bold;">내용</label>
-          <input type="text" class="form-control" th:field="*{contents}" required="required" title="입금자분 성함"/>
-        </div>
-        <div class="d-grid gap-2">
-          <button type="submit" class="btn btn-primary">등록하기</button>
+        <div class="d-grid gap-2 p-3">
+          <button type="submit" class="btn btn-gaji">등록하기</button>
         </div>
       </form>
     </div>
