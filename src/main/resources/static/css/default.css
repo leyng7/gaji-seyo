@@ -67,3 +67,8 @@
   text-decoration: none;
   color: #916dd5;
 }
+
+.gaji-check-input:checked {
+  background-color: #573d7f;
+  border-color: #573d7f;
+}

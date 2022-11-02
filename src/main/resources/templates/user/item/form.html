@@ -27,15 +27,15 @@
         <div class="mb-3 p-2">
           <div class="row">
             <div class="col-10">
-              <input type="text" class="form-control" th:field="*{price}" placeholder="￦ 가격을 입력해주세요." title="가격을 입력해주세요."/>
+              <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" class="form-control" th:field="*{price}" placeholder="￦ 가격을 입력해주세요." title="가격을 입력해주세요."/>
             </div>
             <div class="col">
-              <input type="checkbox" class="form-check-input" id="shared" th:field="*{shared}" title="나눔을 선택해주세요."/>
+              <input type="checkbox" class="form-check-input gaji-check-input" id="shared" th:field="*{shared}" title="나눔을 선택해주세요."/>
               <label th:for="shared" class="form-label" style="font-weight: bold;">나눔</label>
             </div>
           </div>
           <div class="p-2">
-            <input type="checkbox" class="form-check-input" id="suggested" th:field="*{suggested}" title="가격 제안을 선택해주세요."/>
+            <input type="checkbox" class="form-check-input gaji-check-input" id="suggested" th:field="*{suggested}" title="가격 제안을 선택해주세요."/>
             <label th:for="suggested" class="form-label" style="font-weight: bold;">가격 제안받기</label>
           </div>
         </div>
@@ -49,3 +49,21 @@
     </div>
   </div>
 </div>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    $('#shared').on('click', function () {
+      var checked = $(this).is(':checked');
+      if (checked) {
+        $('#price').val(0);
+        $('#suggested').parent().hide();
+      } else {
+        $('#price').val('');
+        $('#suggested').parent().show();
+      }
+    });
+
+</script>
+
+  // 나눔을 체크하면 가격에 0 이 들어가고 가격 제안받기가 사라져야해
+  // 가격에 어떤 숫자가 들어가면 나눔 체크가 풀려야해
