@@ -38,18 +38,18 @@
 <div class="container mt-auto">
     <ul class="nav nav-pills nav-fill gaji-pills">
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}"
+            <a class="nav-link gaji-link" th:classappend="${#httpServletRequest.requestURI == '/items' ? 'active' : ''}"
                th:href="@{/items}">홈</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">가지생활</a>
+            <a class="nav-link gaji-link" href="#">가지생활</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/chat' ? 'active' : ''}"
+            <a class="nav-link gaji-link" th:classappend="${#httpServletRequest.requestURI == '/chat' ? 'active' : ''}"
                th:href="@{/chat}">채팅</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/myInfo' ? 'active' : ''}"
+            <a class="nav-link gaji-link" th:classappend="${#httpServletRequest.requestURI == '/myInfo' ? 'active' : ''}"
                th:href="@{/myInfo}">나의가지</a>
         </li>
     </ul>

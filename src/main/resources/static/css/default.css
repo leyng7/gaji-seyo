@@ -44,7 +44,7 @@
 .nav-pills .show > .nav-link
 .gaji-pills {
     color: #fff;
-    background-color: #916dd5;
+    background-color: #46325d;
 }
 
 .nav-pills .nav-link .gaji-pills {
@@ -57,4 +57,13 @@
 
 .nav-pills .nav-item.dropdown.show .nav-link:hover .gaji-pills {
     color: #fff;
+}
+
+.gaji-link {
+  color: #0a0e14;
+}
+
+.gaji-link:hover, .gaji-link:focus {
+  text-decoration: none;
+  color: #916dd5;
 }
