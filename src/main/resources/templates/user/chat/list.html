@@ -6,15 +6,15 @@
         layout:decorate="~{user/layout}"
 >
     <body>
-        <div class="container py-5" layout:fragment="content">
+        <div class="container" layout:fragment="content">
             <div class="card mb-1" th:each="chatRoom : ${chatRoomList}">
-                <a class="row g-0" th:href="@{/chat/__${chatRoom.id}__}">
+                <a class="row g-0 text-decoration-none" th:href="@{/chat/__${chatRoom.id}__}">
                     <div class="col-2 d-flex align-items-center">
                         <img src="/AdminLTE-3.1.0/img/AdminLTELogo.png" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-10">
-                        <div class="card-body">
-                            <h5 class="card-title">현수 <small class="text-muted">1주 전</small></h5>
+                        <div class="card-body" th:with="chatMember=${chatRoom.isSeller(currentUser) ? chatRoom.buyer : chatRoom.seller}">
+                            <h5 class="card-title"><th:block th:text="${chatMember.nickname}">현수</th:block> <small class="text-muted">1주 전</small></h5>
                             <p class="card-text">네~ 오시느라 고생 많으셨습니다..</p>
                         </div>
                     </div>
