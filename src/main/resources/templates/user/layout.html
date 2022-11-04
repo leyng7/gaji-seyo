@@ -42,7 +42,8 @@
                        th:href="@{/items}">홈</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link gaji-link" href="#">가지생활</a>
+                    <a class="nav-link gaji-link" th:classappend="${#httpServletRequest.requestURI == '/lives' ? 'active' : ''}"
+                       th:href="@{/lives}">가지생활</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link gaji-link" th:classappend="${#httpServletRequest.requestURI == '/chat' ? 'active' : ''}"
