@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html
         lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{user/layout}"
 >
-<body>
+    <body>
 
-<div class="container py-5" layout:fragment="content">
-
-</div>
-
-</body>
+        <div class="container py-5" layout:fragment="content">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <img src="" alt=""/>
+                    <div th:text="${currentUser.nickname}">닉네임</div>
+                </div>
+                <a class="text-decoration-none" th:href="@{/myInfo/edit}">프로필 보기</a>
+            </div>
+            <h5>나의 거래</h5>
+            <div>
+                <a href="#" class="text-decoration-none d-flex align-items-center p-1">
+                    <div style="flex-basis: 15px;">
+                        <i class="fa-regular fa-receipt"></i>
+                    </div>
+                    <div class="ms-2">판매내역</div>
+                </a>
+                <a href="#" class="text-decoration-none d-flex align-items-center p-1">
+                    <div style="flex-basis: 15px;">
+                        <i class="fa-regular fa-bag-shopping"></i>
+                    </div>
+                    <div class="ms-2">구매내역</div>
+                </a>
+                <a href="#" class="text-decoration-none d-flex align-items-center p-1">
+                    <div style="flex-basis: 15px;">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+                    <div class="ms-2">관심목록</div>
+                </a>
+            </div>
+            <h5 class="mt-5">나의 동네생활</h5>
+            <div>
+                <a href="#" class="text-decoration-none d-flex align-items-center p-1">
+                    <div style="flex-basis: 15px;">
+                        <i class="fa-regular fa-receipt"></i>
+                    </div>
+                    <div class="ms-2">동네생활 글/댓글</div>
+                </a>
+            </div>
+        </div>
+    </body>
 </html>

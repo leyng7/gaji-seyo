@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{user/layout}"
+>
+    <body>
+
+        <div class="container py-5" layout:fragment="content">
+            <form method="post" th:action="@{/myInfo/edit}" th:object="${currentUser}">
+                <div class="text-center">
+                    <h4>프로필 수정</h4>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <img class="img-circle w-25" src="/images/logo.jpeg"/>
+                    <input type="file"/>
+                </div>
+                <div class="mt-4">
+                    <small>닉네임</small>
+                    <input class="form-control" type="text" th:field="*{nickname}" />
+                </div>
+                <button type="submit" class="mt-2 btn btn-primary w-100">저장</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -41,4 +41,9 @@ public class ChatRoom extends BaseTimeEntity {
     public static ChatRoom create(Item item, Member seller, Member buyer) {
         return new ChatRoom(item, seller, buyer);
     }
+
+    public boolean isSeller(Member member) {
+        return this.seller.equals(member);
+    }
+
 }
