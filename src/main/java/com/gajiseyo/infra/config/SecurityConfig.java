@@ -32,6 +32,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .mvcMatchers(
                         "/items/**",
+                        "/lives/**",
                         "/chat/**",
                         "/topic/**",
                         "/app/**",
