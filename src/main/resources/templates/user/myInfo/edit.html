@@ -8,13 +8,13 @@
     <body>
 
         <div class="container py-5" layout:fragment="content">
-            <form method="post" th:action="@{/myInfo/edit}" th:object="${currentUser}">
+            <form method="post" th:action="@{/myInfo/edit}" th:object="${currentUser}" enctype="multipart/form-data">
                 <div class="text-center">
                     <h4>프로필 수정</h4>
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <img class="img-circle w-25" src="/images/logo.jpeg"/>
-                    <input type="file"/>
+                    <input type="file" name="picture" />
                 </div>
                 <div class="mt-4">
                     <small>닉네임</small>

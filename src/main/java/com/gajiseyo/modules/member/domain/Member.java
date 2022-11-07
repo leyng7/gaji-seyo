@@ -2,6 +2,7 @@ package com.gajiseyo.modules.member.domain;
 
 
 import com.gajiseyo.modules.common.BaseTimeEntity;
+import com.gajiseyo.modules.file.domain.ProgFile;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,12 @@ public class Member extends BaseTimeEntity implements Serializable {
     private String nickname;
 
     // 프로필 사진
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "file_id", referencedColumnName = "file_id"),
+            @JoinColumn(name = "file_seq", referencedColumnName = "seq"),
+    })
+    private ProgFile picture;
 
     // 매너 온도
 
@@ -49,6 +56,10 @@ public class Member extends BaseTimeEntity implements Serializable {
 
     public void changeNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void changePicture(ProgFile picture) {
+        this.picture = picture;
     }
 
     @Override

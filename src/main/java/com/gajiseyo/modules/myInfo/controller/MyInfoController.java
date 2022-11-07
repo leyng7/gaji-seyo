@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,9 +37,10 @@ public class MyInfoController {
 
     @PostMapping("/myInfo/edit")
     public String update(@CurrentUser Member currentUser,
+                         @RequestParam(required = false) MultipartFile picture,
                          @RequestParam String nickname) {
 
-        memberService.updateNickname(currentUser, nickname);
+        memberService.updateProfile(currentUser, picture, nickname);
 
         return "redirect:/myInfo";
     }

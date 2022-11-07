@@ -52,10 +52,11 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public String chat(@CurrentUser Member member,
+    public String chat(@CurrentUser Member currentUser,
                        Model model) {
 
         model.addAttribute("chatRoomList", chatRoomRepository.findAll());
+        model.addAttribute("currentUser", currentUser);
 
         return "user/chat/list";
     }

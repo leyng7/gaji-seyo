@@ -40,3 +40,5 @@ out/
 *.yml
 .DS_Store
 node_modules/
+thumbnails/
+attachFiles/
