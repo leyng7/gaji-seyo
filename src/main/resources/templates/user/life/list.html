@@ -9,21 +9,21 @@
 
 <div class="container" layout:fragment="content">
 
-    <div th:each="content : ${list}" class="card mb-3 text-decoration-none p-2">
-        <a th:href="@{/lives/{id}(id=${content.id})}" class="text-decoration-none text-dark" role="button">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img th:src="@{/images/bg3.jpg}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div th:each="content : ${list}" class="col">
+            <a th:href="@{/lives/{id}(id=${content.id})}" class="text-decoration-none text-dark" role="button">
+                <div class="card h-100">
+                    <img th:src="@{/images/bg3.jpg}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <p class="card-text"><span th:text="${content.category}"></span></p>
+                        <h5 class="card-title"><span th:text="${content.category.getDisplayValue()}"></span></h5>
                         <p class="card-text"><span th:text="${content.contents}"></span></p>
-                        <p class="card-text"><small class="text-muted"><span th:text="${#temporals.format(content.createdDate, 'yyyy-MM-dd')}"></span></small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted"><span th:text="${#temporals.format(content.createdDate, 'yyyy-MM-dd')}"></span></small>
                     </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
