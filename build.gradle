@@ -36,6 +36,7 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
 
     implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.5.2'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -77,7 +78,7 @@ querydsl {
 sourceSets {
     main.java.srcDir querydslDir
 }
-compileQuerydsl{
+compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 

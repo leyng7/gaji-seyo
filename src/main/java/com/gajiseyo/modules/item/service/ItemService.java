@@ -2,9 +2,12 @@ package com.gajiseyo.modules.item.service;
 
 import com.gajiseyo.modules.item.domain.Item;
 import com.gajiseyo.modules.item.dto.ItemForm;
+import com.gajiseyo.modules.item.dto.ItemSearch;
 import com.gajiseyo.modules.item.repository.ItemRepository;
 import com.gajiseyo.modules.member.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,4 +59,7 @@ public class ItemService {
         return itemRepository.findById(itemId);
     }
 
+    public Page<Item> getItemPage(Pageable pageable, ItemSearch search) {
+        return itemRepository.searchAll(pageable, search);
+    }
 }
