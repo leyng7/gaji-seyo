@@ -2,10 +2,14 @@ package com.gajiseyo.modules.item.controller;
 
 import com.gajiseyo.modules.item.domain.Item;
 import com.gajiseyo.modules.item.dto.ItemForm;
+import com.gajiseyo.modules.item.dto.ItemSearch;
 import com.gajiseyo.modules.item.service.ItemService;
 import com.gajiseyo.modules.member.auth.CurrentUser;
 import com.gajiseyo.modules.member.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +25,12 @@ public class ItemController {
   private final ItemService itemService;
 
   @GetMapping("/items")
-  public String list(Model model) {
+  public String list(@SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                     @ModelAttribute("search") ItemSearch search,
+                     Model model) {
 
-    model.addAttribute("list", itemService.findAll());
+    model.addAttribute("list", itemService.getItemPage(pageable, search));
+
     return "user/item/list";
   }
 
