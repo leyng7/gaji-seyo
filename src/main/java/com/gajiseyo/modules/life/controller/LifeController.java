@@ -2,10 +2,14 @@ package com.gajiseyo.modules.life.controller;
 
 import com.gajiseyo.modules.life.domain.Life;
 import com.gajiseyo.modules.life.dto.LifeForm;
+import com.gajiseyo.modules.life.dto.LifeSearch;
 import com.gajiseyo.modules.life.service.LifeService;
 import com.gajiseyo.modules.member.auth.CurrentUser;
 import com.gajiseyo.modules.member.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +25,11 @@ public class LifeController {
     private final LifeService lifeService;
 
     @GetMapping("/lives")
-    public String list(Model model) {
+    public String list(@SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                       @ModelAttribute("search") LifeSearch search,
+                       Model model) {
 
-        model.addAttribute("list", lifeService.findAll());
+        model.addAttribute("list", lifeService.getLifePage(pageable, search));
         return "user/life/list";
     }
 
