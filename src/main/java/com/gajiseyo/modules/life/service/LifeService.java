@@ -2,9 +2,12 @@ package com.gajiseyo.modules.life.service;
 
 import com.gajiseyo.modules.life.domain.Life;
 import com.gajiseyo.modules.life.dto.LifeForm;
+import com.gajiseyo.modules.life.dto.LifeSearch;
 import com.gajiseyo.modules.life.repository.LifeRepository;
 import com.gajiseyo.modules.member.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +48,10 @@ public class LifeService {
 
     public Optional<Life> findById(Long LifeId) {
         return lifeRepository.findById(LifeId);
+    }
+
+    public Page<Life> getLifePage(Pageable pageable, LifeSearch search) {
+        return lifeRepository.searchAll(pageable, search);
     }
 
 }
